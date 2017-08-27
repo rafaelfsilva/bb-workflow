@@ -55,6 +55,9 @@ j_sgt.uses(f_sgty, link=Link.OUTPUT, transfer=False)
 j_sgt.uses(f_sgtxh, link=Link.OUTPUT, transfer=False)
 j_sgt.uses(f_sgtyh, link=Link.OUTPUT, transfer=False)
 
+# Pre-script
+j_sgt.addProfile(Profile(Namespace.DAGMAN, 'PRE', os.getcwd() + '/bin/bb-check'))
+
 # DirectSynth
 j_ds = Job('sgt-generator-synth')
 j_ds.addProfile(Profile(Namespace.Pegasus, 'glite.arguments', '#SBATCH -p regular'))
@@ -62,7 +65,7 @@ j_ds.addProfile(Profile(Namespace.Pegasus, 'glite.arguments', '#SBATCH -N 64'))
 j_ds.addProfile(Profile(Namespace.Pegasus, 'glite.arguments', '#SBATCH -C haswell'))
 j_ds.addProfile(Profile(Namespace.Pegasus, 'glite.arguments', '#SBATCH -t 05:00:00'))
 j_ds.addProfile(Profile(Namespace.Pegasus, 'glite.arguments', '#DW persistentdw name=csbb'))
-workflow.addJob(j_sgt)
+workflow.addJob(j_ds)
 
 j_ds.uses(f_sgtx, link=Link.INPUT)
 j_ds.uses(f_sgty, link=Link.INPUT)
