@@ -1,0 +1,3 @@
+#!/bin/bash
+
+echo "NOOP job only to setup the BB"
