@@ -1,0 +1,3 @@
+#!/bin/bash
+
+echo "NOOP job only to destroy the BB"
