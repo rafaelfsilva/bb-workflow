@@ -1,0 +1,7 @@
+#!/bin/bash
+
+until scontrol show burst | grep rfsilva
+do
+  echo "Not available"
+  sleep 5
+done
