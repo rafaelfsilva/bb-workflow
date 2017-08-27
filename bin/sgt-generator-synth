@@ -1,0 +1,40 @@
+#!/bin/bash
+
+#SBATCH -N 64
+#SBATCH -t 00:10:00
+#SBATCH -p debug
+#SBATCH -L SCRATCH
+#SBATCH -C haswell
+#SBATCH -e bb-write.e
+#SBATCH -o bb-write.o
+#DW persistentdw name=csbb
+
+ulimit -c unlimited
+cd $SLURM_SUBMIT_DIR
+export ATP_ENABLED=1
+
+count=$((SLURM_JOB_NUM_NODES * 32))
+
+#ls -lh $DW_PERSISTENT_STRIPED_csbb
+
+rm -rf $DW_PERSISTENT_STRIPED_csbb/write
+#rm -rf $DW_PERSISTENT_STRIPED_csbb/s001_fy_4777.sgt
+#rm -rf $DW_PERSISTENT_STRIPED_csbb/s001_fx_4777.sgthead
+#rm -rf $DW_PERSISTENT_STRIPED_csbb/s001_fy_4777.sgthead
+
+echo "WRITING fx.sgt"
+srun -n $count ./matrix 323 $DW_PERSISTENT_STRIPED_csbb/write
+
+#echo "WRITING fy.sgt"
+#srun -n $count ./write-sgt /global/cscratch1/sd/scottcal/SGTs/s001_fy_4757.sgt $DW_PERSISTENT_STRIPED_csbb/s001_fy_4777.sgt
+
+#echo "WRITING fx.sgthead"
+#srun -n $count ./write-sgt /global/cscratch1/sd/scottcal/SGTs/s001_fx_4757.sgthead $DW_PERSISTENT_STRIPED_csbb/s001_fx_4777.sgthead
+
+#echo "WRITING fy.sgthead"
+#srun -n $count ./write-sgt /global/cscratch1/sd/scottcal/SGTs/s001_fy_4757.sgthead $DW_PERSISTENT_STRIPED_csbb/s001_fy_4777.sgthead
+
+ls -l $DW_PERSISTENT_STRIPED_csbb/
+
+
+
